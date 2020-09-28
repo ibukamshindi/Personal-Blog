@@ -1,7 +1,8 @@
 import os
 
 class Config:
-  SECRET_KEY = 'huwezi sahau'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://patrick:201400@localhost/blog'
+    SECRET_KEY = 'huwezi sahau'
 
 
 
