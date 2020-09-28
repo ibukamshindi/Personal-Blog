@@ -2,6 +2,7 @@ from flask import render_template
 from . import main
 from ..request import get_quotes
 
+
 # Views
 @main.route('/')
 def index():
