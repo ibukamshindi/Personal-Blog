@@ -1,0 +1,11 @@
+<div class="navbar-collapse collapse">
+  <ul class="nav navbar-nav navbar-right" id="mySidenav">
+    {% if current_user.is_authenticated %}
+    <li id="profile"><a href="{{url_for('main.profile',uname=current_user.username)}}">PROFILE</a></li>
+    <li id="sign-out"><a href="{{url_for('auth.logout')}}">SIGN OUT</a></li>
+    {% else %}
+    <li style="font-size:25px; color:black" id="home"><a href="/">HOME</a></li>
+    <li id="sign-in"><a href="{{url_for('auth.login')}}">SIGN IN</a></li>
+    {% endif %}
+  </ul>
+</div>
