@@ -1,7 +1,8 @@
-from flask import render_template
+from flask import render_template,redirect,request,url_for
 from . import main
 from ..request import get_quotes
-from flask_login import login_required, current_user
+from app.models import BlogPost
+
 
 
 # Views
@@ -15,5 +16,6 @@ def index():
     quote = myquote['quote']
     quote_author = myquote['author']
 
-    title = 'Home - Welcome to My Blog'
-    return render_template('index.html', title = title, quote=quote,quote_author=quote_author)
+    page = request.args.get('page', 1, type=int)
+    blog_posts = BlogPost.query.order_by(BlogPost.date.desc()).paginate(page=page, per_page=10)
+    return render_template('index.html',quote=quote,quote_author=quote_author)
