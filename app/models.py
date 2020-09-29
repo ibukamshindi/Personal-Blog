@@ -1,6 +1,7 @@
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
@@ -9,6 +10,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255),unique = True,index = True)
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     pass_secure = db.Column(db.String(255))
+    posts = db.relationship('BlogPost',backref='author',lazy=True)
+
         
     @property
     def password(self):
@@ -31,4 +34,19 @@ class Role(db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+
+class BlogPost(db.Model):
+    users = db.relationship(User)
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer,db.ForeignKey ('users.id'),nullable=False)
+    date = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    title = db.Column(db.String(140),nullable=False)
+    text = db.Column(db.Text,nullable=False)
+
+    def __init__(self,title,text,user_id):
+        self.title = title
+        self.text = text
+        self.user_id = user_id
+    def __repr__(self):
+        return f"Post ID: {self.id} -- Date: {self.date}"
 
