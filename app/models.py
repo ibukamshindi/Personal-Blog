@@ -7,7 +7,6 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(user_id)
 
-
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
@@ -17,8 +16,7 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     pass_secure = db.Column(db.String(255))
     posts = db.relationship('BlogPost',backref='author',lazy=True)
-
-        
+   
     @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
@@ -29,8 +27,6 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.pass_secure, password)
-
-
 
 class Role(db.Model):
     __tablename__ = 'roles'

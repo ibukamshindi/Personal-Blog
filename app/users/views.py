@@ -7,8 +7,6 @@ from app.users.forms import RegistrationForm, LoginForm, UpdateUserForm
 # from app.users.picture_handler import add_profile_pic
 from . import users
 
-
-
 @users.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -67,7 +65,6 @@ def account():
 
     # profile_image = url_for('static', filename='profile_pics/' + current_user.profile_image)
     return render_template('account.html', form=form)
-
 
 @users.route("/<username>")
 def user_posts(username):
