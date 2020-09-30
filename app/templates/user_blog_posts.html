@@ -1,4 +1,4 @@
-% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
 <div class="container">
   <div class="jumbotron">
@@ -13,7 +13,7 @@
           <div class="text-primary">Written by:</div> <a href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
           <p class="text-muted">Published on: {{ post.date.strftime('%Y-%m-%d') }}</p>
           <br>
-            <p>{{post.text}}</p>
+          <p>{{post.text}}</p>
           <br>
 
 {% endfor %}
@@ -23,8 +23,6 @@
 
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    {# http://flask.pocoo.org/snippets/44/ #}
-
     {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if blog_posts.page == page_num %}
               <li class="page-item disabled">
