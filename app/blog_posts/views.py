@@ -5,7 +5,6 @@ from app.models import BlogPost
 from app.blog_posts.forms import BlogPostForm
 from . import blog_posts
 
-
 @blog_posts.route('/create',methods=['GET','POST'])
 @login_required
 def create_post():

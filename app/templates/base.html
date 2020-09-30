@@ -14,19 +14,16 @@
             class="nav-link active"
             href="{{ url_for('main.index') }}"
             style="color: black"
-            >Home</a
-          >
+            >Home</a>
         </li>
         {% if current_user.is_authenticated %}
         <li class="nav-link">
           <a href="{{ url_for('users.logout') }}" style="color: black"
-            >Log Out</a
-          >
+            >Log Out</a>
         </li>
         <li class="nav-link">
           <a href="{{ url_for('users.account') }}" style="color: black"
-            >Account</a
-          >
+            >Account</a>
         </li>
         <li class="nav-link">
           <a
@@ -37,15 +34,13 @@
         {% else %}
         <li class="nav-link">
           <a href="{{ url_for('users.login') }}" style="color: black"
-            >Log In</a
-          >
+            >Log In</a>
         </li>
         <li class="nav-link">
           <a
             href="{{ url_for('users.register') }}"
             style="color: black"
-            >Register</a
-          >
+            >Register</a>
         </li>
         {% endif %}
       </ul>

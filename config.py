@@ -1,10 +1,7 @@
 import os
-
 class Config:
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://patrick:201400@localhost/blog'
     SECRET_KEY = 'huwezi sahau'
-
-
 
 class ProdConfig(Config):
     '''
@@ -14,7 +11,6 @@ class ProdConfig(Config):
         Config: The parent configuration class with General configuration settings
     '''
     pass
-
 
 class DevConfig(Config):
     DEBUG = True
