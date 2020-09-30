@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
 {% block content %}
 <div class="mt-5 mb-5 p-5 text-center">
   <h1 class="text-primary text-center m-0 mb-3">{{ post.title }}</h1>
@@ -14,9 +12,6 @@
      </div>
    {% endif %}
 </div>
-
-
-
 <div class="modal fade" tabindex="-1" role="dialog" id="del_modal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
