@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for,redirect, request, flash, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from app import db
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -20,45 +20,27 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        flash('Thanks for registering! Now you can login!')
         return redirect(url_for('users.login'))
-    return render_template('register.html', form=form)
+    return render_template('register.html', registration_form=form)
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
 
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Grab the user from User Models table
-        user = User.query.filter_by(email=form.email.data).first()
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(email=login_form.email.data).first()
+        if user is not None and user.verify_password(login_form.password.data):
+            login_user(user,login_form.remember.data)
+            return redirect(request.args.get('next') or url_for('main.index'))
 
+        flash('Invalid username or Password')
 
-        if user.check_password(form.password.data) and user is not None:
-            #Log in the user
-
-            login_user(user)
-            flash('Logged in successfully.')
-
-            # If a user was trying to visit a page that requires a login
-            # flask saves that URL as 'next'.
-            next = request.args.get('next')
-
-            # So let's now check if that next exists, otherwise we'll go to
-            # the welcome page.
-            if next == None or not next[0]=='/':
-                next = url_for('main.index')
-
-            return redirect(next)
-    return render_template('login.html', form=form)
-
-
-
+    return render_template('login.html', login_form=login_form)
 
 @users.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
-
 
 @users.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -66,13 +48,12 @@ def account():
 
     form = UpdateUserForm()
 
-
     if form.validate_on_submit():
         print(form)
         if form.picture.data:
             username = current_user.username
-            pic = add_profile_pic(form.picture.data,username)
-            current_user.profile_image = pic
+            # pic = add_profile_pic(form.picture.data,username)
+            # current_user.profile_image = pic
 
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -84,8 +65,8 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-    profile_image = url_for('static', filename='profile_pics/' + current_user.profile_image)
-    return render_template('account.html', profile_image=profile_image,form=form)
+    # profile_image = url_for('static', filename='profile_pics/' + current_user.profile_image)
+    return render_template('account.html', form=form)
 
 
 @users.route("/<username>")

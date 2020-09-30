@@ -42,6 +42,7 @@ class Role(db.Model):
         return f'User {self.username}'
 
 class BlogPost(db.Model):
+    __tablename__= 'blogposts'
     users = db.relationship(User)
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey ('users.id'),nullable=False)

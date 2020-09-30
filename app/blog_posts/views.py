@@ -12,7 +12,6 @@ def create_post():
     form = BlogPostForm()
 
     if form.validate_on_submit():
-
         blog_post = BlogPost(title=form.title.data,
                              text=form.text.data,
                              user_id=current_user.id
@@ -21,8 +20,7 @@ def create_post():
         db.session.commit()
         flash("Blog Post Created")
         return redirect(url_for('main.index'))
-
-    return render_template('create_post.html',form=form)
+    return render_template('create_post.html',blogpost_form=form)
 
 @blog_posts.route('/<int:blog_post_id>')
 def blog_post(blog_post_id):
